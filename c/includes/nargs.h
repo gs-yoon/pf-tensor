@@ -25,25 +25,25 @@
 /* for AT(type, pf_tensor,...) function */
 #define AT(t,self,...)  CAT(AT,NARGS(0,__VA_ARGS__))(self,t,0,1,__VA_ARGS__)
 #define AT1(self,t,v,ss,p1) *((t*)(self)->root + ss*p1 + v)
-#define AT2(self,t,v,ss,p1, p2) AT1(self,t,v + ss*p2, ss*(self)->info.shape[1],p1)
-#define AT3(self,t,v,ss,p1, p2,p3) AT2(self,t,v + ss*p3, ss*(self)->info.shape[2],p1,p2 ) //#
-#define AT4(self,t,v,ss,p1, p2,p3,p4) AT3(self,t,v + ss*p4, ss*(self)->info.shape[3],p1,p2,p3 )
-#define AT5(self,t,v,ss,p1, p2,p3,p4,p5) AT4(self,t,v + ss*p5, ss*(self)->info.shape[4],p1,p2,p3,p4 )
-#define AT6(self,t,v,ss,p1, p2,p3,p4,p5,p6) AT5(self,t,v + ss*p6, ss*(self)->info.shape[5],p1,p2,p3,p4,p5 )
-#define AT7(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7) AT6(self,t,v + ss*p7, ss*(self)->info.shape[6],p1,p2,p3,p4,p5,p6 )
-#define AT8(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8) AT7(self,t,v + ss*p8, ss*(self)->info.shape[7],p1,p2,p3,p4,p5,p6,p7 )
-#define AT9(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8,p9) AT8(self,t,v + ss*p9, ss*(self)->info.shape[8],p1,p2,p3,p4,p5,p6,p7,p8 )
+#define AT2(self,t,v,ss,p1, p2) AT1(self,t,v + ss*p2, ss*(self)->shape[1],p1)
+#define AT3(self,t,v,ss,p1, p2,p3) AT2(self,t,v + ss*p3, ss*(self)->shape[2],p1,p2 ) //#
+#define AT4(self,t,v,ss,p1, p2,p3,p4) AT3(self,t,v + ss*p4, ss*(self)->shape[3],p1,p2,p3 )
+#define AT5(self,t,v,ss,p1, p2,p3,p4,p5) AT4(self,t,v + ss*p5, ss*(self)->shape[4],p1,p2,p3,p4 )
+#define AT6(self,t,v,ss,p1, p2,p3,p4,p5,p6) AT5(self,t,v + ss*p6, ss*(self)->shape[5],p1,p2,p3,p4,p5 )
+#define AT7(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7) AT6(self,t,v + ss*p7, ss*(self)->shape[6],p1,p2,p3,p4,p5,p6 )
+#define AT8(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8) AT7(self,t,v + ss*p8, ss*(self)->shape[7],p1,p2,p3,p4,p5,p6,p7 )
+#define AT9(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8,p9) AT8(self,t,v + ss*p9, ss*(self)->shape[8],p1,p2,p3,p4,p5,p6,p7,p8 )
 
 
 /* for ATT(type, pf_tensor) function (temp)*/
-#define ATT(t,self,...)  CAT(ATT,NARGS(0,__VA_ARGS__))(self,t,__VA_ARGS__)
-#define ATT0 0
-#define ATT1(self,t,p1) *((t*)(self)->root+p1)
-#define ATT2(self,t,p1, p2)  *((t*)(self)->root+(self)->info.shape[1]*p1 + p2) //#
-#define ATT3(self,t,p1, p2,p3)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*p1 +(self)->info.shape[2]*p2 + p3)
-#define ATT4(self,t,p1, p2,p3,p4)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*p1 + (self)->info.shape[2]*(self)->info.shape[3]*p2 + (self)->info.shape[3]*p3 + p4)
-#define ATT5(self,t,p1, p2,p3,p4,p5)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*p1 +(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*p2 + (self)->info.shape[3]*(self)->info.shape[4]*p3 + (self)->info.shape[4]*p4 + p5)
-#define ATT6(self,t,p1, p2,p3,p4,p5,p6)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p1 + (self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p2 +(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p3 + (self)->info.shape[4]*(self)->info.shape[5]*p4 + (self)->info.shape[5]*p5 + p6)
+// #define ATT(t,self,...)  CAT(ATT,NARGS(0,__VA_ARGS__))(self,t,__VA_ARGS__)
+// #define ATT0 0
+// #define ATT1(self,t,p1) *((t*)(self)->root+p1)
+// #define ATT2(self,t,p1, p2)  *((t*)(self)->root+(self)->info.shape[1]*p1 + p2) //#
+// #define ATT3(self,t,p1, p2,p3)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*p1 +(self)->info.shape[2]*p2 + p3)
+// #define ATT4(self,t,p1, p2,p3,p4)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*p1 + (self)->info.shape[2]*(self)->info.shape[3]*p2 + (self)->info.shape[3]*p3 + p4)
+// #define ATT5(self,t,p1, p2,p3,p4,p5)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*p1 +(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*p2 + (self)->info.shape[3]*(self)->info.shape[4]*p3 + (self)->info.shape[4]*p4 + p5)
+// #define ATT6(self,t,p1, p2,p3,p4,p5,p6)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p1 + (self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p2 +(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p3 + (self)->info.shape[4]*(self)->info.shape[5]*p4 + (self)->info.shape[5]*p5 + p6)
 
 
 /* for making tensor, return dimension and shape*/
@@ -58,5 +58,13 @@
 #define SHAPE7(p1, p2,p3,p4,p5,p6,p7) 7,p1,p2,p3,p4,p5,p6,p7,
 #define SHAPE8(p1, p2,p3,p4,p5,p6,p7,p8) 8,p1,p2,p3,p4,p5,p6,p7,p8
 #define SHAPE9(p1, p2,p3,p4,p5,p6,p7,p8,p9) 9,p1,p2,p3,p4,p5,p6,p7,p8,p9
+
+
+#define VA_IDX(d, p)        \
+    va_list ap;              \
+    va_start(ap, d);          \
+    for (int i = 0; i < d; i++)\
+        p[i] = va_arg(ap, int); \
+	va_end(ap);                  
 
 #endif

@@ -1,2 +1,2 @@
-# tensor_on_c
-ToC : c lang based tensor for ondevice deeplearning 
+# pf-tensor
+c lang based tensor for ondevice deeplearning 

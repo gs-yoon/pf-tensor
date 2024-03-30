@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdarg.h>
+#include <string.h>
+#include <malloc.h>
 
 #include "nargs.h"
 #include "type_definition.h"
@@ -31,8 +33,12 @@ typedef struct pf_tensor
 {
     /* data */
     void*    root;
-    PF_TYPE  type; 
-    pf_info  info;
+    PF_TYPE  type;
+    
+    /* info */ 
+    int*     shape;
+    int      ndim;
+    int      size;
 
     /* base operator */
     struct pf_tensor* (*mul)(struct pf_tensor* self,       struct pf_tensor* operand);
@@ -43,7 +49,7 @@ typedef struct pf_tensor
     struct pf_tensor* (*matMul)(struct pf_tensor* self,    struct pf_tensor* operand);
 
     /* func */
-    double (*at)(struct pf_tensor* self, ...);
+    double (*at)(struct pf_tensor* self, int dim, ...);
 }pf_tensor;
 
 #endif
