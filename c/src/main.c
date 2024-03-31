@@ -8,10 +8,12 @@ int main()
     pf_tensor tensor;
     tensor = makeZeros(PF_FLOAT32, SHAPE(2,3));
     pf_tensor b = makeZeros(PF_FLOAT32, SHAPE(2,3));
-    for (int i =0 ; i < b.size; i ++)
-        *((float*)b.root+i) = 1;
+    
+    tensor.set(&tensor, 1);
+    b.set(&b,2);
 
-    pf_tensor result = (tensor.add(&tensor, &b));
+    // pf_tensor result = (tensor.add(&tensor, &b));
+    pf_tensor result = pf_sub(&tensor, &b);
     printf("test\n");
     pfprint(&tensor);
     pfprint(&result);

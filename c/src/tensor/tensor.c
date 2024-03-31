@@ -66,3 +66,42 @@ pf_tensor makeZeros( PF_TYPE type, int dim, ...)
     
     return tensor;
 }
+
+
+pf_tensor pf_add(pf_tensor* self, pf_tensor* operand)
+{
+    pf_tensor result;
+    self->add(self,operand,&result);
+    return result;
+
+}
+pf_tensor pf_mul(pf_tensor* self, pf_tensor* operand)
+{
+    pf_tensor result;
+    self->mul(self,operand,&result);
+    return result;
+}
+pf_tensor pf_sub(pf_tensor* self, pf_tensor* operand)
+{
+    pf_tensor result;
+    self->sub(self,operand,&result);
+    return result;
+}
+pf_tensor pf_div(pf_tensor* self, pf_tensor* operand)
+{
+    pf_tensor result;
+    self->div(self,operand,&result);
+    return result;
+}
+pf_tensor pf_dot(pf_tensor* self, pf_tensor* operand)
+{
+    pf_tensor result;
+    self->dot(self,operand,&result);
+    return result;
+}
+pf_tensor pf_matmul(pf_tensor* self, pf_tensor* operand)
+{
+    pf_tensor result;
+    self->matMul(self,operand,&result);
+    return result;
+}

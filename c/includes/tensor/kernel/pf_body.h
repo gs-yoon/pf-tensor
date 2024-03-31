@@ -48,16 +48,17 @@ typedef struct pf_tensor
     PF_DEVICE  device;
 
     /* base operator */
-    struct pf_tensor (*mul)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor (*add)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor (*sub)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor (*div)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor (*dot)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor (*matMul)(struct pf_tensor* self,    struct pf_tensor* operand);
+    bool (*mul)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
+    bool (*add)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
+    bool (*sub)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
+    bool (*div)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
+    bool (*dot)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
+    bool (*matMul)(struct pf_tensor* self,    struct pf_tensor* operand, struct pf_tensor* result);
 
     /* func */
     double (*at)(struct pf_tensor* self, int dim, ...);
     void   (*to)(struct pf_tensor* self, PF_DEVICE device);
+    bool   (*set)(struct pf_tensor* self, double value);
 }pf_tensor;
 
 #endif

@@ -19,7 +19,8 @@ bool pf_t32f_init(pf_tensor* self, PF_DEVICE device)
         self->matMul = pf_matMul32f;
     }
 
-    self->at = pf_t32f_at; // TODO : change to vargs
+    self->at  = pf_t32f_at; // TODO : change to vargs
+    self->set = pf_t32f_set;
 }
 
 void pf_t32f_to(pf_tensor* self, PF_DEVICE device)
@@ -41,24 +42,31 @@ void pf_t32f_to(pf_tensor* self, PF_DEVICE device)
     return;
 }
 
-double pf_t32f_at(pf_tensor * data, int dim, ...)
+double pf_t32f_at(pf_tensor * self, int dim, ...)
 {
     int pos[10] = {0};
     VA_IDX(dim, pos)
 
     switch(dim)
     {
-        case 0:  return ATD0(float,data->root);
-        case 1:  return ATDN(float,data->root, data->shape, pos, 1);
-        case 2:  return ATDN(float,data->root, data->shape, pos, 2);
-        case 3:  return ATDN(float,data->root, data->shape, pos, 3);
-        case 4:  return ATDN(float,data->root, data->shape, pos, 4);
-        case 5:  return ATDN(float,data->root, data->shape, pos, 5);
-        case 6:  return ATDN(float,data->root, data->shape, pos, 6);
-        case 7:  return ATDN(float,data->root, data->shape, pos, 7);
-        case 8:  return ATDN(float,data->root, data->shape, pos, 8);
-        case 9:  return ATDN(float,data->root, data->shape, pos, 9);
+        case 0:  return ATD0(float,self->root);
+        case 1:  return ATDN(float,self->root, self->shape, pos, 1);
+        case 2:  return ATDN(float,self->root, self->shape, pos, 2);
+        case 3:  return ATDN(float,self->root, self->shape, pos, 3);
+        case 4:  return ATDN(float,self->root, self->shape, pos, 4);
+        case 5:  return ATDN(float,self->root, self->shape, pos, 5);
+        case 6:  return ATDN(float,self->root, self->shape, pos, 6);
+        case 7:  return ATDN(float,self->root, self->shape, pos, 7);
+        case 8:  return ATDN(float,self->root, self->shape, pos, 8);
+        case 9:  return ATDN(float,self->root, self->shape, pos, 9);
     }
+}
+
+bool pf_t32f_set(pf_tensor* self, double value)
+{
+    float32* data = (float32*)self->root;
+    for (int i =0 ; i < self->size; i ++)
+        data[i] = (float32)value;
 }
 
 int pf_t32f_alloc(pf_tensor* self,  int dim, int* shape)
