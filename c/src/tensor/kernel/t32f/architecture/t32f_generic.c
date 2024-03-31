@@ -2,6 +2,13 @@
 
 bool pf_mul32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 {
+
+    if(operand->type != PF_FLOAT32)
+    {
+        PF_LOG("operand type is mismatched");
+        return 0;
+    }
+
     if(result->root == NULL)
     {
         pf_t32f_init(result, self->device);
@@ -25,6 +32,12 @@ bool pf_mul32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 
 bool pf_add32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 {
+    if(operand->type != PF_FLOAT32)
+    {
+        PF_LOG("operand type is mismatched");
+        return 0;
+    }
+
     if(result->root == NULL)
     {
         pf_t32f_init(result, self->device);
@@ -47,6 +60,12 @@ bool pf_add32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 }
 bool pf_sub32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 {
+    if(operand->type != PF_FLOAT32)
+    {
+        PF_LOG("operand type is mismatched");
+        return 0;
+    }
+
     if(result->root == NULL)
     {
         pf_t32f_init(result, self->device);
@@ -69,6 +88,11 @@ bool pf_sub32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 }
 bool pf_div32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 {
+    if(operand->type != PF_FLOAT32)
+    {
+        PF_LOG("operand type is mismatched");
+        return 0;
+    }
     if(result->root == NULL)
     {
         pf_t32f_init(result, self->device);
@@ -91,6 +115,12 @@ bool pf_div32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 }
 bool pf_dot32f(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
 {
+    if(operand->type != PF_FLOAT32)
+    {
+        PF_LOG("operand type is mismatched");
+        return 0;
+    }
+
     int nshape[10] = {0};
     memcpy(nshape, self->shape, self->size);
     nshape[self->ndim-1] = 1;

@@ -59,6 +59,7 @@ typedef struct pf_tensor
     double (*at)(struct pf_tensor* self, int dim, ...);
     void   (*to)(struct pf_tensor* self, PF_DEVICE device);
     bool   (*set)(struct pf_tensor* self, double value);
+    // bool   (*astype)(struct pf_tensor* self, PF_TYPE type);
 }pf_tensor;
 
 #endif
