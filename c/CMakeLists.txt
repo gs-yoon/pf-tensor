@@ -3,19 +3,26 @@ project( platform_free_c LANGUAGES C)
 
 include_directories( ${CMAKE_SOURCE_DIR}/includes/
                      ${CMAKE_SOURCE_DIR}/includes/tensor/
+                     ${CMAKE_SOURCE_DIR}/includes/utils/
                      ${CMAKE_SOURCE_DIR}/includes/definition 
+                     ${CMAKE_SOURCE_DIR}/includes/tensor/linalg 
                      ${CMAKE_SOURCE_DIR}/includes/tensor/kernel 
                      ${CMAKE_SOURCE_DIR}/includes/tensor/kernel/t32f 
+                     ${CMAKE_SOURCE_DIR}/includes/tensor/kernel/t32i
                      ${CMAKE_SOURCE_DIR}/includes/tensor/kernel/t32f/architecture 
+                     ${CMAKE_SOURCE_DIR}/includes/tensor/kernel/t32i/architecture 
                      )
 
 
 file(GLOB SOURCES
     "src/*.c"
+    "src/utils/*.c"
     "src/tensor/*.c"
     "src/tensor/kernel/*.c"
     "src/tensor/kernel/t32f/*.c"
+    "src/tensor/kernel/t32i/*.c"
     "src/tensor/kernel/t32f/architecture/*.c"
+    "src/tensor/kernel/t32i/architecture/*.c"
     # "src/tensor/*.cpp"
     # "src/tensor/*.cu"
     # "src/essential/basefunc/*.cpp"/

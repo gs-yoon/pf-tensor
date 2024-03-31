@@ -35,17 +35,6 @@
 #define AT9(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8,p9) AT8(self,t,v + ss*p9, ss*(self)->shape[8],p1,p2,p3,p4,p5,p6,p7,p8 )
 
 
-/* for ATT(type, pf_tensor) function (temp)*/
-// #define ATT(t,self,...)  CAT(ATT,NARGS(0,__VA_ARGS__))(self,t,__VA_ARGS__)
-// #define ATT0 0
-// #define ATT1(self,t,p1) *((t*)(self)->root+p1)
-// #define ATT2(self,t,p1, p2)  *((t*)(self)->root+(self)->info.shape[1]*p1 + p2) //#
-// #define ATT3(self,t,p1, p2,p3)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*p1 +(self)->info.shape[2]*p2 + p3)
-// #define ATT4(self,t,p1, p2,p3,p4)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*p1 + (self)->info.shape[2]*(self)->info.shape[3]*p2 + (self)->info.shape[3]*p3 + p4)
-// #define ATT5(self,t,p1, p2,p3,p4,p5)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*p1 +(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*p2 + (self)->info.shape[3]*(self)->info.shape[4]*p3 + (self)->info.shape[4]*p4 + p5)
-// #define ATT6(self,t,p1, p2,p3,p4,p5,p6)  *((t*)(self)->root + (self)->info.shape[1]*(self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p1 + (self)->info.shape[2]*(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p2 +(self)->info.shape[3]*(self)->info.shape[4]*(self)->info.shape[5]*p3 + (self)->info.shape[4]*(self)->info.shape[5]*p4 + (self)->info.shape[5]*p5 + p6)
-
-
 /* for making tensor, return dimension and shape*/
 #define SHAPE(...) CAT(SHAPE,NARGS(0,__VA_ARGS__))(__VA_ARGS__)
 #define SHAPE0() 0

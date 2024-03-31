@@ -9,6 +9,12 @@
 
 #include "nargs.h"
 #include "type_definition.h"
+#include "device_definition.h"
+
+#define PF_LOG(m) printf("(%s:%d) %s\n", __func__ , __LINE__ , (m))
+// #define PF_LOG(fmt, ...) \
+    // printf("[%s: %d][%s] " fmt "\t\t\t (%s, %s)\n", \
+    // __FILE__, __LINE__, __func__, __DATE__, __TIME__);
 
 typedef enum PF_TYPE {
     PF_UNDEFIEND = 0,
@@ -32,24 +38,26 @@ typedef struct pf_info
 typedef struct pf_tensor
 {
     /* data */
-    void*    root;
-    PF_TYPE  type;
+    void*      root;
+    PF_TYPE    type;
     
     /* info */ 
-    int*     shape;
-    int      ndim;
-    int      size;
+    int*       shape;
+    int        ndim;
+    int        size;
+    PF_DEVICE  device;
 
     /* base operator */
-    struct pf_tensor* (*mul)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor* (*add)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor* (*sub)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor* (*div)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor* (*dot)(struct pf_tensor* self,       struct pf_tensor* operand);
-    struct pf_tensor* (*matMul)(struct pf_tensor* self,    struct pf_tensor* operand);
+    struct pf_tensor (*mul)(struct pf_tensor* self,       struct pf_tensor* operand);
+    struct pf_tensor (*add)(struct pf_tensor* self,       struct pf_tensor* operand);
+    struct pf_tensor (*sub)(struct pf_tensor* self,       struct pf_tensor* operand);
+    struct pf_tensor (*div)(struct pf_tensor* self,       struct pf_tensor* operand);
+    struct pf_tensor (*dot)(struct pf_tensor* self,       struct pf_tensor* operand);
+    struct pf_tensor (*matMul)(struct pf_tensor* self,    struct pf_tensor* operand);
 
     /* func */
     double (*at)(struct pf_tensor* self, int dim, ...);
+    void   (*to)(struct pf_tensor* self, PF_DEVICE device);
 }pf_tensor;
 
 #endif
