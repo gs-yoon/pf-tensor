@@ -44,6 +44,21 @@ pf_tensor makeTensor(PF_TYPE type, int dim, ...)
     return tensor;
 }
 
+pf_tensor makeTensorIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
+{
+    pf_tensor tensor;
+    int shape[10] = {0};
+    VA_IDX(dim,shape);
+
+    initTensor(&tensor, type, device);
+    int success = allocTensor(&tensor, dim, shape);
+    if(!success)
+        PF_LOG("Allocation Failed");
+
+    return tensor;
+}
+
+
 bool breakTensor(pf_tensor* self)
 {
     freeTensor(self);
@@ -67,6 +82,22 @@ pf_tensor makeZeros( PF_TYPE type, int dim, ...)
     return tensor;
 }
 
+pf_tensor makeZerosIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
+{
+    pf_tensor tensor;
+    int shape[10] = {0};
+    VA_IDX(dim,shape);
+
+    initTensor(&tensor, type, device);
+    int success = allocTensor(&tensor, dim, shape);
+    if(!success)
+        PF_LOG("Allocation Failed");
+
+    if (type == PF_FLOAT32)
+        memset(tensor.root, 0x00, (size_t)tensor.size * sizeof(float32));
+
+    return tensor;
+}
 
 pf_tensor pf_add(pf_tensor* self, pf_tensor* operand)
 {
