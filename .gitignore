@@ -1,3 +1,11 @@
+#vscode
+.vscode/
+
+#build
+build/
+c/build/*
+cpp/build/*
+
 # Prerequisites
 *.d
 
