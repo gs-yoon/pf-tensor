@@ -15,6 +15,22 @@ bool allocTensor(pf_tensor* self, int dim, int* shape)
         return 0;
 }
 
+static inline void createTensor(pf_tensor* tensor, PF_TYPE type, PF_DEVICE device, int dim, int* shape )
+{
+    initTensor(tensor, type, device);
+    int success = allocTensor(tensor, dim, shape);
+    if(!success)
+        PF_LOG("Allocation Failed");
+}
+
+static inline void createTensorLike(pf_tensor* result, pf_tensor* wannabe)
+{
+    initTensor(result, wannabe->type, wannabe->device);
+    int success = allocTensor(result, wannabe->ndim, wannabe->shape);
+    if(!success)
+        PF_LOG("Allocation Failed");
+}
+
 bool freeTensor(pf_tensor* self)
 {
     int ret =0;
@@ -29,6 +45,10 @@ bool freeTensor(pf_tensor* self)
     }
     return ret;
 }
+bool breakTensor(pf_tensor* self)
+{
+    freeTensor(self);
+}
 
 pf_tensor makeTensor(PF_TYPE type, int dim, ...)
 {
@@ -36,10 +56,7 @@ pf_tensor makeTensor(PF_TYPE type, int dim, ...)
     int shape[10] = {0};
     VA_IDX(dim,shape);
 
-    initTensor(&tensor, type, PF_GENERIC);
-    int success = allocTensor(&tensor, dim, shape);
-    if(!success)
-        PF_LOG("Allocation Failed");
+    createTensor(&tensor, type, PF_GENERIC, dim, shape);
 
     return tensor;
 }
@@ -50,18 +67,9 @@ pf_tensor makeTensorIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
     int shape[10] = {0};
     VA_IDX(dim,shape);
 
-    initTensor(&tensor, type, device);
-    int success = allocTensor(&tensor, dim, shape);
-    if(!success)
-        PF_LOG("Allocation Failed");
+    createTensor(&tensor, type, PF_GENERIC, dim, shape);
 
     return tensor;
-}
-
-
-bool breakTensor(pf_tensor* self)
-{
-    freeTensor(self);
 }
 
 
@@ -71,10 +79,7 @@ pf_tensor makeZeros( PF_TYPE type, int dim, ...)
     int shape[10] = {0};
     VA_IDX(dim,shape);
 
-    initTensor(&tensor, type,PF_GENERIC);
-    int success = allocTensor(&tensor, dim, shape);
-    if(!success)
-        PF_LOG("Allocation Failed");
+    createTensor(&tensor, type, PF_GENERIC, dim, shape);
     
     if (type == PF_FLOAT32)
         memset(tensor.root, 0x00, (size_t)tensor.size * sizeof(float32));
@@ -88,10 +93,7 @@ pf_tensor makeZerosIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
     int shape[10] = {0};
     VA_IDX(dim,shape);
 
-    initTensor(&tensor, type, device);
-    int success = allocTensor(&tensor, dim, shape);
-    if(!success)
-        PF_LOG("Allocation Failed");
+    createTensor(&tensor, type, PF_GENERIC, dim, shape);
 
     if (type == PF_FLOAT32)
         memset(tensor.root, 0x00, (size_t)tensor.size * sizeof(float32));
@@ -99,40 +101,52 @@ pf_tensor makeZerosIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
     return tensor;
 }
 
+
 pf_tensor pf_add(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->add(self,operand,&result);
     return result;
-
 }
 pf_tensor pf_mul(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->mul(self,operand,&result);
     return result;
 }
 pf_tensor pf_sub(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->sub(self,operand,&result);
     return result;
 }
 pf_tensor pf_div(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->div(self,operand,&result);
     return result;
 }
 pf_tensor pf_dot(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->dot(self,operand,&result);
     return result;
 }
 pf_tensor pf_matmul(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->matMul(self,operand,&result);
     return result;
 }
