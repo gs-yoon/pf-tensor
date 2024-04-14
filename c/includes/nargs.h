@@ -10,8 +10,8 @@
 
 /* for pf_tensor.at function*/
 #define ATDN(t,p,s,i,d) ATD##d(t,p,s,i, s[d-1], i[d-1])
-#define ATD0(t,p) (double)(*((t*)p))
-#define ATD1(t,p,s,i,ss,v) (double)(*((t*)p+v))
+#define ATD0(t,p) ((t*)p)
+#define ATD1(t,p,s,i,ss,v) ((t*)p+v)
 #define ATD2(t,p,s,i,ss,v) ATD1(t,p,s,i, s[0]*ss, ss*i[0] + v)
 #define ATD3(t,p,s,i,ss,v) ATD2(t,p,s,i, s[1]*ss, ss*i[1] + v)
 #define ATD4(t,p,s,i,ss,v) ATD3(t,p,s,i, s[2]*ss, ss*i[2] + v)
@@ -48,6 +48,7 @@
 
 /* for making tensor, return dimension and shape*/
 #define SHAPE(...) CAT(SHAPE,NARGS(0,__VA_ARGS__))(__VA_ARGS__)
+#define S(...) SHAPE(__VA_ARGS__)
 #define SHAPE0() 0
 #define SHAPE1(p1)  1,p1
 #define SHAPE2(p1, p2)  2,p1,p2

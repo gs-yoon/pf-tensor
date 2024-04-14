@@ -42,24 +42,31 @@ void pf_t32f_to(pf_tensor* self, PF_DEVICE device)
     return;
 }
 
-double pf_t32f_at(pf_tensor * self, int dim, ...)
+pf_tensor pf_t32f_at(pf_tensor * self, int dim, ...)
 {
     int pos[10] = {0};
     VA_IDX(dim, pos)
 
+    pf_tensor result;
+    static int constant_shape[1] = {1};
+    pf_t32f_init(&result, self->device );
+    result.shape = constant_shape;
+    result.ndim = 1;
+
     switch(dim)
     {
-        case 0:  return ATD0(float,self->root);
-        case 1:  return ATDN(float,self->root, self->shape, pos, 1);
-        case 2:  return ATDN(float,self->root, self->shape, pos, 2);
-        case 3:  return ATDN(float,self->root, self->shape, pos, 3);
-        case 4:  return ATDN(float,self->root, self->shape, pos, 4);
-        case 5:  return ATDN(float,self->root, self->shape, pos, 5);
-        case 6:  return ATDN(float,self->root, self->shape, pos, 6);
-        case 7:  return ATDN(float,self->root, self->shape, pos, 7);
-        case 8:  return ATDN(float,self->root, self->shape, pos, 8);
-        case 9:  return ATDN(float,self->root, self->shape, pos, 9);
+        case 0:  result.root = ATD0(float,self->root);
+        case 1:  result.root = ATDN(float,self->root, self->shape, pos, 1);
+        case 2:  result.root = ATDN(float,self->root, self->shape, pos, 2);
+        case 3:  result.root = ATDN(float,self->root, self->shape, pos, 3);
+        case 4:  result.root = ATDN(float,self->root, self->shape, pos, 4);
+        case 5:  result.root = ATDN(float,self->root, self->shape, pos, 5);
+        case 6:  result.root = ATDN(float,self->root, self->shape, pos, 6);
+        case 7:  result.root = ATDN(float,self->root, self->shape, pos, 7);
+        case 8:  result.root = ATDN(float,self->root, self->shape, pos, 8);
+        case 9:  result.root = ATDN(float,self->root, self->shape, pos, 9);
     }
+    return result;
 }
 
 bool pf_t32f_set(pf_tensor* self, double value)

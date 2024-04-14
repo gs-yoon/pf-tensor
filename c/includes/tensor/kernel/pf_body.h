@@ -12,9 +12,6 @@
 #include "device_definition.h"
 
 #define PF_LOG(m) printf("(%s:%d) %s\n", __func__ , __LINE__ , (m))
-// #define PF_LOG(fmt, ...) \
-    // printf("[%s: %d][%s] " fmt "\t\t\t (%s, %s)\n", \
-    // __FILE__, __LINE__, __func__, __DATE__, __TIME__);
 
 typedef enum PF_TYPE {
     PF_UNDEFIEND = 0,
@@ -56,9 +53,10 @@ typedef struct pf_tensor
     bool (*matmul)(struct pf_tensor* self,    struct pf_tensor* operand, struct pf_tensor* result);
 
     /* func */
-    double (*at)(struct pf_tensor* self, int dim, ...);
+    struct pf_tensor (*at)(struct pf_tensor* self, int dim, ...);
     void   (*to)(struct pf_tensor* self, PF_DEVICE device);
     bool   (*set)(struct pf_tensor* self, double value);
+    double (*values)(struct pf_tensor* self);
     // bool   (*astype)(struct pf_tensor* self, PF_TYPE type);
 }pf_tensor;
 

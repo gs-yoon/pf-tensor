@@ -17,8 +17,12 @@ int main()
     // pf_tensor result = (tensor.add(&tensor, &b));
     pf_tensor result = pf_matmul(&tensor, &b);
     printf("test\n");
-    pfprint(&tensor);
-    pfprint(&result);
+    pfprint(tensor);
+    pfprint(result);
+    // pf_tensor t = result.at(&result,SHAPE(1,1));
+    result.at(&result,S(1,1)).set(&result,1);
+    pfprint(result);
+    // pfprint( (result.at(&result,SHAPE(1,1))) );
     if( freeTensor(&tensor) == false)
         printf("free failed\n");
     else

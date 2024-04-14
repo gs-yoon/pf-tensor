@@ -3,8 +3,8 @@
 
 #include "pf_body.h"
 
-void pfprint(pf_tensor* self);
-void pfprintShape(pf_tensor* self);
+void pfprint(pf_tensor self);
+void pfprintShape(pf_tensor self);
 
 
 #endif

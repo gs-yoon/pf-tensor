@@ -1,13 +1,13 @@
 
 #include "pf_print.h"
 
-void pfprint(pf_tensor* self)
+void pfprint(pf_tensor self)
 {
     pfprintShape(self);
 
-    int rank = self->ndim;
-    int* shape = self->shape;
-    float* data = (float*)self->root;
+    int rank = self.ndim;
+    int* shape = self.shape;
+    float* data = (float*)self.root;
 
     for(int r =0 ; r < rank-1 ; r++)
         printf("[");
@@ -22,7 +22,7 @@ void pfprint(pf_tensor* self)
             printf("%.3f,", data[jump + i]);
         }
         jump += shape[rank-1];
-        if (jump < self->size)
+        if (jump < self.size)
         {
             printf("]\n");
         }
@@ -35,10 +35,10 @@ void pfprint(pf_tensor* self)
     for(int r =0 ; r < rank-1 ; r++)
         printf("]\n");
 }
-void pfprintShape(pf_tensor* self)
+void pfprintShape(pf_tensor self)
 {
     printf("shape = (");
-    for (int i =0 ; i < self->ndim ; i++)
-        printf("%d,", self->shape[i]);
+    for (int i =0 ; i < self.ndim ; i++)
+        printf("%d,", self.shape[i]);
     printf(")\n");
 }
