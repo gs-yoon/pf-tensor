@@ -10,7 +10,7 @@ bool pf_t32i_init(pf_tensor* self)
     self->sub    = pf_sub32i;
     self->div    = pf_div32i;
     self->dot    = pf_dot32i;
-    self->matMul = pf_matMul32i;
+    self->matmul = pf_matmul32i;
 
     self->at = pf_t32i_at;
 }

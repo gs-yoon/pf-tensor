@@ -8,6 +8,6 @@ bool pf_add32f(pf_tensor* self,       pf_tensor* operand, pf_tensor* result );
 bool pf_sub32f(pf_tensor* self,       pf_tensor* operand, pf_tensor* result );
 bool pf_div32f(pf_tensor* self,       pf_tensor* operand, pf_tensor* result );
 bool pf_dot32f(pf_tensor* self,       pf_tensor* operand, pf_tensor* result );
-bool pf_matMul32f(pf_tensor* self,    pf_tensor* operand, pf_tensor* result );
+bool pf_matmul32f(pf_tensor* self,    pf_tensor* operand, pf_tensor* result );
 
 #endif

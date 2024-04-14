@@ -34,6 +34,17 @@
 #define AT8(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8) AT7(self,t,v + ss*p8, ss*(self)->shape[7],p1,p2,p3,p4,p5,p6,p7 )
 #define AT9(self,t,v,ss,p1, p2,p3,p4,p5,p6,p7,p8,p9) AT8(self,t,v + ss*p9, ss*(self)->shape[8],p1,p2,p3,p4,p5,p6,p7,p8 )
 
+/* for AT(data,shape,...) function */
+#define ATS(self,shape,...)  CAT(ATS,NARGS(0,__VA_ARGS__))(self,shape,0,1,__VA_ARGS__)
+#define ATS1(self,shape,v,ss,p1) *(self + ss*p1 + v)
+#define ATS2(self,shape,v,ss,p1, p2) ATS1(self,shape,v + ss*p2, ss*shape[1],p1)
+#define ATS3(self,shape,v,ss,p1, p2,p3) ATS2(self,shape,v + ss*p3, ss*shape[2],p1,p2 ) //#
+#define ATS4(self,shape,v,ss,p1, p2,p3,p4) ATS3(self,shape,v + ss*p4, ss*shape[3],p1,p2,p3 )
+#define ATS5(self,shape,v,ss,p1, p2,p3,p4,p5) ATS4(self,shape,v + ss*p5, ss*shape[4],p1,p2,p3,p4 )
+#define ATS6(self,shape,v,ss,p1, p2,p3,p4,p5,p6) ATS5(self,shape,v + ss*p6, ss*shape[5],p1,p2,p3,p4,p5 )
+#define ATS7(self,shape,v,ss,p1, p2,p3,p4,p5,p6,p7) ATS6(self,shape,v + ss*p7, ss*shape[6],p1,p2,p3,p4,p5,p6 )
+#define ATS8(self,shape,v,ss,p1, p2,p3,p4,p5,p6,p7,p8) ATS7(self,shape,v + ss*p8, ss*shape[7],p1,p2,p3,p4,p5,p6,p7 )
+#define ATS9(self,shape,v,ss,p1, p2,p3,p4,p5,p6,p7,p8,p9) ATS8(self,shape,v + ss*p9, ss*shape[8],p1,p2,p3,p4,p5,p6,p7,p8 )
 
 /* for making tensor, return dimension and shape*/
 #define SHAPE(...) CAT(SHAPE,NARGS(0,__VA_ARGS__))(__VA_ARGS__)

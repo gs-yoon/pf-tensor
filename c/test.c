@@ -17,7 +17,7 @@ struct op32f
 //    struct pf_Tensor32f* (*sub)(struct pf_Tensor32f *self,       struct pf_Tensor32f *operand);
 //    struct pf_Tensor32f* (*div)(struct pf_Tensor32f *self,       struct pf_Tensor32f *operand);
 //    struct pf_Tensor32f* (*dot)(struct pf_Tensor32f *self,       struct pf_Tensor32f *operand);
-//    struct pf_Tensor32f* (*matMul)(struct pf_Tensor32f *self,    struct pf_Tensor32f *operand);
+//    struct pf_Tensor32f* (*mamtul)(struct pf_Tensor32f *self,    struct pf_Tensor32f *operand);
 };
 
 struct pf_info

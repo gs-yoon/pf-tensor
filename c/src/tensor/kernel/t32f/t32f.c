@@ -16,7 +16,7 @@ bool pf_t32f_init(pf_tensor* self, PF_DEVICE device)
         self->sub    = pf_sub32f;
         self->div    = pf_div32f;
         self->dot    = pf_dot32f;
-        self->matMul = pf_matMul32f;
+        self->matmul = pf_matmul32f;
     }
 
     self->at  = pf_t32f_at; // TODO : change to vargs
@@ -71,6 +71,12 @@ bool pf_t32f_set(pf_tensor* self, double value)
 
 int pf_t32f_alloc(pf_tensor* self,  int dim, int* shape)
 {
+    if(self->root != NULL)
+    {
+        PF_LOG("not empty tensor. already allocated");
+        return 0;
+    }
+
     self->ndim   = dim;
     self->shape  = (int*)malloc(sizeof(int) * dim);
     memcpy(self->shape, shape, sizeof(int)*dim);

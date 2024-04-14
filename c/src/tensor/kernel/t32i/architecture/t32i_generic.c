@@ -12,5 +12,5 @@ pf_tensor* pf_div32i(pf_tensor* self, pf_tensor* operand)
 {}
 pf_tensor* pf_dot32i(pf_tensor* self, pf_tensor* operand)
 {}
-pf_tensor* pf_matMul32i(pf_tensor* self, pf_tensor *operand)
+pf_tensor* pf_matmul32i(pf_tensor* self, pf_tensor *operand)
 {}

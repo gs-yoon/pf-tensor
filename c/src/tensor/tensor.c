@@ -105,48 +105,36 @@ pf_tensor makeZerosIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
 pf_tensor pf_add(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
-    createTensorLike(&result, self);
-
     self->add(self,operand,&result);
     return result;
 }
 pf_tensor pf_mul(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
-    createTensorLike(&result, self);
-
     self->mul(self,operand,&result);
     return result;
 }
 pf_tensor pf_sub(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
-    createTensorLike(&result, self);
-
     self->sub(self,operand,&result);
     return result;
 }
 pf_tensor pf_div(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
-    createTensorLike(&result, self);
-
     self->div(self,operand,&result);
     return result;
 }
 pf_tensor pf_dot(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
-    createTensorLike(&result, self);
-
     self->dot(self,operand,&result);
     return result;
 }
 pf_tensor pf_matmul(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
-    createTensorLike(&result, self);
-
-    self->matMul(self,operand,&result);
+    self->matmul(self,operand,&result);
     return result;
 }

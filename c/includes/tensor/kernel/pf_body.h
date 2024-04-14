@@ -53,7 +53,7 @@ typedef struct pf_tensor
     bool (*sub)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
     bool (*div)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
     bool (*dot)(struct pf_tensor* self,       struct pf_tensor* operand, struct pf_tensor* result);
-    bool (*matMul)(struct pf_tensor* self,    struct pf_tensor* operand, struct pf_tensor* result);
+    bool (*matmul)(struct pf_tensor* self,    struct pf_tensor* operand, struct pf_tensor* result);
 
     /* func */
     double (*at)(struct pf_tensor* self, int dim, ...);
