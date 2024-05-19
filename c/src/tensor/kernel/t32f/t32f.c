@@ -19,9 +19,16 @@ bool pf_t32f_init(pf_tensor* self, PF_DEVICE device)
         self->matmul = pf_matmul32f;
     }
 
-    self->at  = pf_t32f_at; // TODO : change to vargs
-    self->set = pf_t32f_set;
+    self->at     = pf_t32f_at;
+    self->set    = pf_t32f_set;
+    self->values = pf_t32f_values;
 }
+
+double pf_t32f_values(pf_tensor* self)
+{
+    return (double)*(float32*)self->root;
+}
+
 
 void pf_t32f_to(pf_tensor* self, PF_DEVICE device)
 {
@@ -34,7 +41,9 @@ void pf_t32f_to(pf_tensor* self, PF_DEVICE device)
         pf_t32f_alloc(&ndata, self->ndim, self->shape);
         
         //copy self to ndata
-            //for ~
+        for(int i =0 ; i<self->size ; i++)
+            *(float32*)(ndata.root+i) = *(float32*)(self->root+i);
+
         free(self->root);
         free(self->shape);
         *self = ndata;
@@ -52,26 +61,31 @@ pf_tensor pf_t32f_at(pf_tensor * self, int dim, ...)
     pf_t32f_init(&result, self->device );
     result.shape = constant_shape;
     result.ndim = 1;
+    result.size = 1; 
 
     switch(dim)
     {
-        case 0:  result.root = ATD0(float,self->root);
-        case 1:  result.root = ATDN(float,self->root, self->shape, pos, 1);
-        case 2:  result.root = ATDN(float,self->root, self->shape, pos, 2);
-        case 3:  result.root = ATDN(float,self->root, self->shape, pos, 3);
-        case 4:  result.root = ATDN(float,self->root, self->shape, pos, 4);
-        case 5:  result.root = ATDN(float,self->root, self->shape, pos, 5);
-        case 6:  result.root = ATDN(float,self->root, self->shape, pos, 6);
-        case 7:  result.root = ATDN(float,self->root, self->shape, pos, 7);
-        case 8:  result.root = ATDN(float,self->root, self->shape, pos, 8);
-        case 9:  result.root = ATDN(float,self->root, self->shape, pos, 9);
+        case 0:  result.root = (void*)ATD0(float,self->root); break;
+        case 1:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 1); break;
+        case 2:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 2); break;
+        case 3:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 3); break;
+        case 4:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 4); break;
+        case 5:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 5); break;
+        case 6:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 6); break;
+        case 7:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 7); break;
+        case 8:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 8); break;
+        case 9:  result.root = (void*)ATDN(float,self->root, self->shape, pos, 9); break;
+        default :
+            PF_LOG("dimension error");
     }
+
     return result;
 }
 
 bool pf_t32f_set(pf_tensor* self, double value)
 {
     float32* data = (float32*)self->root;
+    printf("%d\n",self->size);
     for (int i =0 ; i < self->size; i ++)
         data[i] = (float32)value;
 }

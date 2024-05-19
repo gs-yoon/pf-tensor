@@ -20,7 +20,10 @@ int main()
     pfprint(tensor);
     pfprint(result);
     // pf_tensor t = result.at(&result,SHAPE(1,1));
-    result.at(&result,S(1,1)).set(&result,1);
+    pf_tensor d = result.at(&result,S(0,0));
+    d = result.at(&result,S(1,1));
+    d.set(&d,1);
+    // pf_t32f_set(&d,set);
     pfprint(result);
     // pfprint( (result.at(&result,SHAPE(1,1))) );
     if( freeTensor(&tensor) == false)
