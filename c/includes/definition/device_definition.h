@@ -3,9 +3,8 @@
 
 typedef enum PF_DEVICE {
     PF_GENERIC = 0,
-    PF_X86, //1
-    PF_CUDA,
-    PF_ARM,
+    PF_X86 // Not Supported
+    // PF_CUDA // Not Supported
     }PF_DEVICE;
 
 

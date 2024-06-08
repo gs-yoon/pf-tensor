@@ -105,36 +105,60 @@ pf_tensor makeZerosIn(PF_TYPE type, PF_DEVICE device ,int dim, ...)
 pf_tensor pf_add(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->add(self,operand,&result);
     return result;
 }
 pf_tensor pf_mul(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->mul(self,operand,&result);
     return result;
 }
 pf_tensor pf_sub(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->sub(self,operand,&result);
     return result;
 }
 pf_tensor pf_div(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    createTensorLike(&result, self);
+
     self->div(self,operand,&result);
     return result;
 }
 pf_tensor pf_dot(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    int nshape[10] = {0};
+
+    initTensor(&result,self->type, self->device);
+    
+    memcpy(nshape,self->shape, sizeof(int) * self->ndim);
+    nshape[self->ndim-1] = 1;
+    
+    allocTensor(&result, self->ndim, nshape);
+
     self->dot(self,operand,&result);
     return result;
 }
 pf_tensor pf_matmul(pf_tensor* self, pf_tensor* operand)
 {
     pf_tensor result;
+    int nshape[10] = {0};
+    nshape[0] = self->shape[0];
+    nshape[1] = operand->shape[1];
+    
+    initTensor(&result,self->type, self->device);
+    allocTensor(&result, self->ndim, nshape);
+
     self->matmul(self,operand,&result);
     return result;
 }

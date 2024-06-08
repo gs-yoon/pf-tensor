@@ -60,4 +60,6 @@ typedef struct pf_tensor
     // bool   (*astype)(struct pf_tensor* self, PF_TYPE type);
 }pf_tensor;
 
+typedef bool (*pf_operator)(pf_tensor* self, pf_tensor* operand, pf_tensor* result);
+
 #endif

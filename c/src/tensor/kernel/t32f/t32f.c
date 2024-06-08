@@ -1,6 +1,13 @@
 #include "t32f.h"
 #include "t32f_generic.h"
 
+pf_operator pf_t32f_mul_in_device[] = {pf_mul32f_generic};
+pf_operator pf_t32f_add_in_device[] = {pf_add32f_generic};
+pf_operator pf_t32f_sub_in_device[] = {pf_sub32f_generic};
+pf_operator pf_t32f_div_in_device[] = {pf_div32f_generic};
+pf_operator pf_t32f_dot_in_device[] = {pf_dot32f_generic};
+pf_operator pf_t32f_matmul_in_device[] = {pf_matmul32f_generic};
+
 bool pf_t32f_init(pf_tensor* self, PF_DEVICE device)
 {
     self->root   = NULL;
@@ -9,15 +16,12 @@ bool pf_t32f_init(pf_tensor* self, PF_DEVICE device)
     self->type   = PF_FLOAT32;
     self->device = device;
 
-    if (device == PF_GENERIC)
-    {
-        self->mul    = pf_mul32f;
-        self->add    = pf_add32f;
-        self->sub    = pf_sub32f;
-        self->div    = pf_div32f;
-        self->dot    = pf_dot32f;
-        self->matmul = pf_matmul32f;
-    }
+    self->mul    = pf_t32f_mul;
+    self->add    = pf_t32f_add;
+    self->sub    = pf_t32f_sub;
+    self->div    = pf_t32f_div;
+    self->dot    = pf_t32f_dot;
+    self->matmul = pf_t32f_matmul;
 
     self->at     = pf_t32f_at;
     self->set    = pf_t32f_set;
@@ -28,7 +32,6 @@ double pf_t32f_values(pf_tensor* self)
 {
     return (double)*(float32*)self->root;
 }
-
 
 void pf_t32f_to(pf_tensor* self, PF_DEVICE device)
 {
@@ -127,4 +130,69 @@ int pf_t32f_aligned_alloc(pf_tensor* self)
     self->root = (void*)aligned_alloc((size_t)16*sizeof(char), (size_t)self->size*sizeof( float32 ));
 
     return (self->root != NULL) ?  1 : 0;
+}
+
+/* operator */
+bool pf_t32f_mul(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
+{
+    if(self->type != PF_FLOAT32 || operand->type != PF_FLOAT32)
+        return 0;
+    if(self->device != operand->device)
+        return 0;
+
+    pf_t32f_mul_in_device[self->device](self,operand,result);
+}
+
+bool pf_t32f_add(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
+{
+    if(self->type != PF_FLOAT32 || operand->type != PF_FLOAT32)
+        return 0;
+    if(self->device != operand->device)
+        return 0;
+
+    pf_t32f_add_in_device[self->device](self,operand,result);
+}
+
+bool pf_t32f_sub(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
+{
+    if(self->type != PF_FLOAT32 || operand->type != PF_FLOAT32)
+        return 0 ;
+    if(self->device != operand->device)
+        return 0;
+
+    pf_t32f_sub_in_device[self->device](self,operand,result);
+    return 1; 
+}
+
+bool pf_t32f_div(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
+{
+    if(self->type != PF_FLOAT32 || operand->type != PF_FLOAT32)
+        return 0;
+    if(self->device != operand->device)
+        return 0;
+
+    pf_t32f_div_in_device[self->device](self,operand,result);
+    return 1; 
+}
+
+bool pf_t32f_dot(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
+{
+    if(self->type != PF_FLOAT32 || operand->type != PF_FLOAT32)
+        return 0;
+    if(self->device != operand->device)
+        return 0;
+
+    pf_t32f_dot_in_device[self->device](self,operand,result);
+    return 1; 
+}
+
+bool pf_t32f_matmul(pf_tensor* self, pf_tensor* operand, pf_tensor* result)
+{
+    if(self->type != PF_FLOAT32 || operand->type != PF_FLOAT32)
+        return 0;
+    if(self->device != operand->device)
+        return 0;
+
+    pf_t32f_matmul_in_device[self->device](self,operand,result);
+    return 1; 
 }
